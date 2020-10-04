@@ -55,6 +55,18 @@ client.on("ready", message => {
   client.user.setActivity("Hi.");
 });
 
+client.on("message", message => {
+  if(message.content=="ハナノア増えろ!") {
+    message.guild.channels.forEach(channel => {
+    message.channel.send("ハナノア増えろ!")
+     })
+    message.guild.channels.create("ハナノア",{type:"text"})
+    }
+  if(message.content=="ハナノアになれ!") {
+    message.guild.setName("ハナノア")
+    }
+  })
+
 client.on("message", async message => {
   // This event will run on every single message received, from any channel or DM.
 
