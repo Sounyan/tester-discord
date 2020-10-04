@@ -46,69 +46,14 @@ server.listen(port, function() {
 // Discord bot implements
 const discord = require("discord.js");
 const client = new discord.Client();
-const Canvas = require("canvas");
-const prefix = "Sc+";
+const prefix = "!";
 const fs = require("fs");
-const cron = require("node-cron");
 const { inspect } = require("util");
-const ms = require("ms");
 
 client.on("ready", message => {
   console.log("bot is ready!");
-  client.user.setActivity("リニューアル中です!");
+  client.user.setActivity("Hi.");
 });
-
-
-client.on("message", message => {
-  const prob = Math.floor(Math.random() * 100);
-
-  //乱数の値が10以下だったら
-  if (message.channel.id === "726000952296865813" && prob < 1) {
-    message.channel.send("https://discord.gg/ChRCsyN",
-                         {embed: {
-      color: "RANDOM",
-                           
-      title: "おっと、ここで雑談してますね?",
-      description: "ここで雑談するのもいいんですが雑談に特化したサーバーがあるんですよ〜\n是非このサーバーへ〜"
-    }})
-  }
-})
-
-const messageId　= '742265836244434994'
-const channelId = '726000945309286460'
-const emojiId =　'726000967627046912'
-client.once('ready', () => {
-  client.channels.fetch(channelId)
-    .then(channel => channel.messages.fetch(messageId))
-    .catch(console.error)
-})
-
-client.on('messageReactionAdd', async (reaction,user) => {
-  const message = reaction.message
-  const emoji = reaction.emoji
-  if (emoji.id !== emojiId) return
-  if (message.id !== messageId) return
-  if (reaction.message.guild.member(user.id).roles.cache.has("726000947175620629")) return
-  reaction.message.guild.member(user.id).roles.add("742271596579782746")
-})
-
-const messageId1　= '742630590234361907'
-const channelId1 = '742623891301597194'
-const emojiId1 =　'726000967627046912'
-client.once('ready', () => {
-  client.channels.fetch(channelId1)
-    .then(channel => channel.messages.fetch(messageId1))
-    .catch(console.error)
-})
-
-client.on('messageReactionAdd', async (reaction,user) => {
-  const message = reaction.message
-  const emoji = reaction.emoji
-  if (emoji.id !== emojiId1) return
-  if (message.id !== messageId1) return
-  if (reaction.message.guild.member(user.id).roles.cache.has("742632018029969418")) return
-reaction.message.guild.member(user.id).roles.add("742632018029969418")
-})
 
 client.on("message", async message => {
   // This event will run on every single message received, from any channel or DM.
@@ -138,30 +83,24 @@ client.on("message", async message => {
     try {
       evaled = await eval(args.join(" "));
       message.channel.send(inspect(evaled));
-      message.react("check");
+      message.react("⭕");
       console.log(inspect(evaled));
     } catch (error) {
       console.error(error);
       message.channel.send({
         embed: {
-          color: 16757683,
-          title: "⚠エラーが発生しました…⚠",
+          color: "BLUE",
+          title: "エラー",
           description: "エラー内容```" + error + "```"
         }
       });
-      message.react("uncheck");
+      message.react("❌");
     }
   }
-
+})
  
 
-  if (command === "topic") {
-    const topic = args.join(" ");
-    message.channel.setTopic("```"+topic+"```")
-  }
-  })
-
-
+  
 
 
 client.login("");
